@@ -126,10 +126,6 @@ int main()
     MPI_Comm_rank(sub_comm, &sub_rank);
     MPI_Comm_size(sub_comm, &sub_size);
 
-    //假设总进程16,分为8组每组处理2个conf
-    // printf("WORLD RANK/SIZE: %d/%d \t ROW RANK/SIZE: %d/%d\n", 
-    //     wd_rank, wd_sz, sub_rank, sub_size);
-
     int local_gst = wd_rank / r * local_n;
     int local_ged = local_gst + local_n - 1;
     double Em = 0.0;    //, psum = 0.0;
