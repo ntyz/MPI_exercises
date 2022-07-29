@@ -93,7 +93,7 @@ int main()
     MPI_Comm_size(MPI_COMM_WORLD, &wd_sz);
     MPI_Comm_rank(MPI_COMM_WORLD, &wd_rank);
 
-    int r = 3, c = 3;
+    int r = 7, c = 7;
     double beta = 1;
     // get_data(wd_rank, wd_sz, &r, &c, &beta);   
     int *conf = (int *)calloc(r * c, sizeof(int));
@@ -107,8 +107,6 @@ int main()
         {
             cout<<"the value wd_sz % r should be 0"<<endl;
             cout<<"the value conf_num % (wd_sz / r) should be 0"<<endl;
-            // cout<<"The number of tasks should be divided by the number of threads."<<endl;
-            // cout<<"That means configuration number multiply node number should be divided by the number of threads"<<endl;
         }
         exit (0);
     }
@@ -133,8 +131,6 @@ int main()
     double Hs = 0, mx = 0;
 
     // printf("WORLD_RANK is: %d, local_gst is: %d\n", wd_rank, local_gst);
-
-    // double st = MPI_Wtime();
     st = clock(); 
     for (int i = local_gst; i <= local_ged; ++ i)
     {
@@ -158,32 +154,14 @@ int main()
         // cout<<endl;
         // printf("WORLD_RANK is: %d, SUB_RANK is: %d\nlocal_Hs is: %lf, Hs is: %lf\n", wd_rank, sub_rank, local_Hs, Hs);
         
-
-        // double p = exp(-beta * Hs);
-        // double mx = 0;
-        // for (auto it : conf) mx += 2 * int(it) - 1;
-        // for (int j = 0; j < node_num; ++ j) mx += 2 * conf[j] - 1;
-        // mx /= node_num;
-        // local_psum += p;
-        // local_Em += p * mx;
     }
     MPI_Reduce(&local_Em, &Em, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
-    // MPI_Reduce(&local_Em, &Em, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-    // MPI_Reduce(&local_psum, &psum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-
-    // MPI_Barrier(MPI_COMM_WORLD);
-    // cout<<"wd_rank is: "<<wd_rank<<" sub_rank is: "<<sub_rank<<" Hs is: "<<Hs<<endl;
-    // cout<<"conf is:"<<endl;
-    // for (int j = 0; j < node_num; ++ j) cout<<conf[j]<<" ";
-    // cout<<endl;
 
     ed = clock();
     if (wd_rank == 0)
     {
         Em /= conf_num;
-        // cout<<"psum is "<<psum<<endl;
-        // cout<<"Em is "<<Em<<endl;
         cout<<"The Ferromagnetism is: "<<Em<<endl;
         cout<<"time = "<<ed - st<<" s"<<endl;
     }

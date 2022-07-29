@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 def get_chain_g(node_num):
     g = nx.Graph()
     for i in range(node_num):
-        g.add_node(i, weight=0)
+        g.add_node(i, weight=5)
         if i < node_num - 1:
             g.add_edge(i, i + 1, weight=1)
     g.add_edge(node_num - 1, 0, weight=1)
@@ -36,9 +36,9 @@ def get_lattice_g(nr, nc):
 
 def get_hamiltonian(conf, g):
     Hs = 0
-    # for nd in g.nodes:
-    #     confu = 2*int(conf[nd]) - 1
-    #     Hs -= g.nodes[nd]['weight'] * confu
+    for nd in g.nodes:
+        confu = 2*int(conf[nd]) - 1
+        Hs -= g.nodes[nd]['weight'] * confu
 
     for ed in g.edges:
         confu, confv = 2*int(conf[ed[0]]) - 1, 2*int(conf[ed[1]]) - 1
@@ -49,7 +49,7 @@ def get_hamiltonian(conf, g):
 
 st = time()
 
-node_num = 9
+node_num = 4
 betalist = [0.2, 1, 1.3, 1.9, 2.3, 5.4, 6.8, 9.1]
 # betalist = [0.2, 1] # np.linspace(0, 20, 20)
 
@@ -72,7 +72,7 @@ for ce in range(0, 2**node_num):
 
 # g = get_chain_g(3)
 # g = get_complete_g(node_num)
-g = get_lattice_g(3, 3)
+g = get_lattice_g(2, 2)
 # plt.figure()
 # nx.draw(g, with_labels=True)
 Ising_beta = []

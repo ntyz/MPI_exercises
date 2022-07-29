@@ -3,7 +3,8 @@
         "algorithm": "cpp",
         "cmath": "cpp",
         "ostream": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "*.tcc": "cpp"
     },
     "terminal.integrated.fontSize": 16,
     "python.interpreterPath": "/home/ntyz/anaconda3/bin/python3",
